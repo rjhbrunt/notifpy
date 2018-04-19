@@ -1,7 +1,7 @@
 
-def slack(*args,**kwargs):
-    if "message" in kwargs.keys():
-        message = kwargs["message"]
+def slack(*dec_args,**dec_kwargs):
+    if "message" in dec_kwargs.keys():
+        message = dec_kwargs["message"]
     else:
         message = ''
     def decorator(func):
@@ -12,10 +12,7 @@ def slack(*args,**kwargs):
         sc = SlackClient(slack_token)
         @functools.wraps(func)
         def func_wrapper(*args,**kwargs):
-            try:
-                _return = func(*args,**kwargs)
-            except:
-                pass
+            _return = func(*args,**kwargs)
             sc.api_call(
                    "chat.postMessage",
                    channel="@ryan",
@@ -23,7 +20,7 @@ def slack(*args,**kwargs):
                     )
             return _return
         return func_wrapper
-    if len(args) == 1 and callable(args[0]):
-        return decorator(args[0])
+    if len(dec_args) == 1 and callable(dec_args[0]):
+        return decorator(dec_args[0])
     else:
         return decorator
