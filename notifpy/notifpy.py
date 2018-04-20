@@ -16,7 +16,7 @@ def slack(*dec_args,**dec_kwargs):
             sc.api_call(
                    "chat.postMessage",
                    channel="@ryan",
-                   text="Finished running: {}\n".format(func.__name__)+message
+                   text="Finished running:{}\n".format(func.__name__)+message+'\n'+str(_return)
                     )
             return _return
         return func_wrapper
