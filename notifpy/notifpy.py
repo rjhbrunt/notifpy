@@ -24,3 +24,7 @@ def slack(*dec_args,**dec_kwargs):
         return decorator(dec_args[0])
     else:
         return decorator
+
+def notify(message):
+    slack(lambda: message, message="hey")()
+    return
